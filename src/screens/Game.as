@@ -5,6 +5,8 @@ package screens
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
 	import utils.Vector2D;
+	import flash.utils.setInterval;
+	import flash.utils.clearInterval;
 	/**
 	 * ...
 	 * @author Ramses di Perna
@@ -12,7 +14,7 @@ package screens
 	public class Game extends Screen
 	{
 		private var gameRunning : Boolean = true;
-		
+		private var shootBallTimer : Number;
 		private var ui : UI = new UI();
 		
 		//Players
@@ -51,8 +53,6 @@ package screens
 			//----------------------------------
 			
 			placeObjects();
-			
-			ball.setVelocity(ball.speed);
 			
 			addEventListener(Event.ENTER_FRAME, update);
 			
@@ -109,11 +109,45 @@ package screens
 			playerTwo.x = stage.stageWidth - 50 - playerTwo.width / 2;
 			playerTwo.y = playerOne.y;
 			
-			ball.location = new Vector2D(stage.stageWidth / 2, stage.stageHeight / 2 - ball.height); 
+			placeBall();
 			
 			addChild(playerOne);
 			addChild(playerTwo);
 			addChild(ball);
+		}
+		
+		private function placeBall(pScred : int = 999):void 
+		{
+			ball.location = new Vector2D(stage.stageWidth / 2, stage.stageHeight / 2 - ball.height);
+			ball.setVelocity(0);
+			ball.setRotation(0);
+			ball.dir = 0;
+			
+			//zet bal animatie op idle
+			
+			if(pScred == 999){
+				shootBallTimer = setInterval(shootBall, 2000);
+			}else {
+				var choseDir = pScred == 1 ? 1 : -1;
+				shootBallTimer = setInterval(shootBall, 2000,choseDir);
+			}
+		}
+		
+		private function shootBall(_dir : int = 999):void 
+		{
+			var rot : Number;
+			
+			clearInterval(shootBallTimer);
+			if(_dir == 999){
+				ball.dir = Math.floor(Math.random() * 2) == 1 ? 1 : -1;
+			}else {
+				ball.dir = _dir;
+			}
+			rot = ball.dir == 1 ? 0 : 180;
+			ball.rotation = rot;
+			ball.setVelocity(ball.speed);
+			
+			//zet bal animatie op moving
 		}
 		
 		private function collisionBall() :void {
@@ -143,8 +177,12 @@ package screens
 			
 			if (ball.x <= 0) {
 				//player 2 scored
+				ui.addScore(2);
+				placeBall(2);
 			}else if (ball.x >= stage.stageWidth) {
 				//player 1 scored
+				ui.addScore(1);
+				placeBall(1);
 			}
 		}
 	}

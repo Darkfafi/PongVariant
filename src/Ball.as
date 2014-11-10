@@ -13,7 +13,7 @@ package
 		public var ballArt : Sprite = new Sprite();
 		private var effectArt : Sprite = new Sprite();
 		
-		public var dir : int = 1;
+		public var dir : int = 0;
 		public var speed : int = 10;  // des de groter de hoek des de groter de speed
 		
 		private var _location : Vector2D;

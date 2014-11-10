@@ -72,6 +72,26 @@ package
 			addChild(p2ScoreText);
 		}
 		
+		public function addScore(player : int) :void{
+			if (player == 1) {
+				p1Score += 1;
+				if (p1Score >= 10) {
+					p1Wins += 1;
+				}
+				p1ScoreText.text = "SCORE : " + p1Score;
+				p1WinText.text = "P1 WINS : " + p1Wins;
+			}
+			else if (player == 2) {
+				p2Score += 1;
+				if (p2Score >= 10) {
+					p2Wins += 1;
+				}
+				p2ScoreText.text = "SCORE : " + p2Score;
+				p2WinText.text = "P2 WINS : " + p2Wins;
+			}else {
+				Error("Score given to non valid player!");
+			}
+		}
 	}
 
 }
