@@ -3,7 +3,9 @@ package screens
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
+	import flash.events.TimerEvent;
 	import flash.ui.Keyboard;
+	import flash.utils.Timer;
 	import utils.Vector2D;
 	import flash.utils.setInterval;
 	import flash.utils.clearInterval;
@@ -15,6 +17,7 @@ package screens
 	{
 		private var gameRunning : Boolean = true;
 		private var shootBallTimer : Number;
+		private var timerCountDown : Timer = new Timer(1000,3);
 		private var ui : UI = new UI();
 		
 		//Players
@@ -33,13 +36,6 @@ package screens
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
-			startGame();
-			
-			addChild(ui);
-		}
-		
-		private function startGame():void 
-		{
 			//background placeHolder
 				var backGround : Sprite = new Sprite();
 				backGround.graphics.beginFill(0x000000, 1);
@@ -52,12 +48,38 @@ package screens
 				addChild(backGround);
 			//----------------------------------
 			
-			placeObjects();
+			startGame();
 			
-			addEventListener(Event.ENTER_FRAME, update);
+			addChild(ui);
+		}
+		
+		private function startGame():void 
+		{	
+			timerCountDown.addEventListener(TimerEvent.TIMER, onTik);
+			timerCountDown.start();
+		}
+		
+		private function onTik(e:Event):void 
+		{
+			var t : Timer = e.target as Timer;
 			
-			stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDown);
-			stage.addEventListener(KeyboardEvent.KEY_UP, keyUp);
+			switch(t.currentCount) {				
+				case 1:
+					trace("READY");
+				break;
+					
+				case 2:
+					trace("SET");
+				break;
+				case 3:
+					trace("GO");
+					placeObjects();
+			
+					addEventListener(Event.ENTER_FRAME, update);
+					stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDown);
+					stage.addEventListener(KeyboardEvent.KEY_UP, keyUp);
+				break;
+			}
 		}
 		
 		private function keyDown(e:KeyboardEvent):void 
@@ -126,10 +148,10 @@ package screens
 			//zet bal animatie op idle
 			
 			if(pScred == 999){
-				shootBallTimer = setInterval(shootBall, 2000);
+				shootBallTimer = setInterval(shootBall, 1000);
 			}else {
 				var choseDir = pScred == 1 ? 1 : -1;
-				shootBallTimer = setInterval(shootBall, 2000,choseDir);
+				shootBallTimer = setInterval(shootBall, 1500,choseDir);
 			}
 		}
 		
