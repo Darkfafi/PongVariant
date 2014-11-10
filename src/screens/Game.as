@@ -4,6 +4,7 @@ package screens
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
+	import utils.Vector2D;
 	/**
 	 * ...
 	 * @author Ramses di Perna
@@ -34,6 +35,8 @@ package screens
 		private function startGame():void 
 		{
 			placeObjects();
+			
+			ball.setVelocity(ball.speed);
 			
 			addEventListener(Event.ENTER_FRAME, update);
 			
@@ -76,6 +79,8 @@ package screens
 			if (gameRunning) {
 				playerOne.update();
 				playerTwo.update();
+				ball.update();
+				collisionBall();
 			}
 		}
 		
@@ -83,19 +88,43 @@ package screens
 		{
 			
 			playerOne.x = 50;
-			playerOne.y = stage.stageHeight / 2 - playerOne.height;
+			playerOne.y = stage.stageHeight / 2 - playerOne.height * 1.25;
 			
-			playerTwo.x = stage.stageWidth - 50 - playerTwo.width;
+			playerTwo.x = stage.stageWidth - 50 - playerTwo.width / 2;
 			playerTwo.y = playerOne.y;
 			
-			ball.x = stage.stageWidth / 2;
-			ball.y = stage.stageHeight / 2 - ball.height; 
+			ball.location = new Vector2D(stage.stageWidth / 2, stage.stageHeight / 2 - ball.height); 
 			
 			addChild(playerOne);
 			addChild(playerTwo);
 			addChild(ball);
 		}
 		
+		private function collisionBall() :void {
+			if (ball.ballArt.hitTestObject(playerOne) && ball.dir == -1) {
+				
+				ball.rotateDirection();
+				var hit1 : Number = (playerOne.height - (ball.y - playerOne.y));
+				hit1 = (hit1 * -2) / 10;
+				
+				playerOne.meltPlayer();
+				ball.setRotation(hit1);
+				
+			}else if (ball.ballArt.hitTestObject(playerTwo) && ball.dir == 1) {
+				
+				ball.rotateDirection();
+				
+				var hit2 : Number = (playerTwo.height - (ball.y - playerTwo.y));
+				hit2 = (hit2 * -2) / 10;
+				
+				playerTwo.meltPlayer();
+				ball.setRotation(hit2);
+			}
+			
+			if (ball.y >= stage.stageHeight || ball.y <= 0) {
+				ball.setRotation(ball.velocity.y * -1);
+			}
+		}
 	}
 
 }
