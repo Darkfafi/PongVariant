@@ -43,7 +43,7 @@ package
 		}
 		
 		public function meltPlayer() :void {
-			if (scaleY > 0.4) {
+			if (scaleY >= 0.3) {
 				scaleY -= meltSpeed;
 			}
 		}

@@ -13,6 +13,8 @@ package screens
 	{
 		private var gameRunning : Boolean = true;
 		
+		private var ui : UI = new UI();
+		
 		//Players
 		private var playerOne : Player = new Player();
 		private var playerTwo : Player = new Player();
@@ -30,10 +32,24 @@ package screens
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
 			startGame();
+			
+			addChild(ui);
 		}
 		
 		private function startGame():void 
 		{
+			//background placeHolder
+				var backGround : Sprite = new Sprite();
+				backGround.graphics.beginFill(0x000000, 1);
+				backGround.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
+				backGround.graphics.lineStyle(2, 0x000000,1);
+				backGround.graphics.endFill();
+				backGround.graphics.beginFill(0xffffff, 1);
+				backGround.graphics.drawRect(stage.stageWidth / 2, 0, 4, stage.stageHeight);
+				backGround.graphics.endFill();
+				addChild(backGround);
+			//----------------------------------
+			
 			placeObjects();
 			
 			ball.setVelocity(ball.speed);
@@ -123,6 +139,12 @@ package screens
 			
 			if (ball.y >= stage.stageHeight || ball.y <= 0) {
 				ball.setRotation(ball.velocity.y * -1);
+			}
+			
+			if (ball.x <= 0) {
+				//player 2 scored
+			}else if (ball.x >= stage.stageWidth) {
+				//player 1 scored
 			}
 		}
 	}

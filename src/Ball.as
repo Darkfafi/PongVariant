@@ -55,8 +55,7 @@ package
 		}
 		public function setRotation(_rotation : Number) : void {
 			_velocity = new Vector2D(_velocity.x, _rotation);
-			this.rotation = Math.atan2(_velocity.y, _velocity.x) * 180 / Math.PI;
-			trace(_velocity);
+			rotation = Math.atan2(_velocity.y, _velocity.x) * 180 / Math.PI;
 		}
 		public function rotateDirection() : void {
 			dir *= -1;
