@@ -18,7 +18,7 @@ package screens
 		private var gameRunning : Boolean = true;
 		private var shootBallTimer : Number;
 		private var timerCountDown : Timer = new Timer(1000,3);
-		private var ui : UI = new UI();
+		private var ui : UI;
 		
 		//Players
 		private var playerOne : Player = new Player();
@@ -27,9 +27,10 @@ package screens
 		//Ball
 		private var ball : Ball = new Ball();
 		
-		public function Game() 
+		public function Game(timesToWin : int) 
 		{
 			addEventListener(Event.ADDED_TO_STAGE, init);
+			ui = new UI(timesToWin);
 		}
 		
 		private function init(e:Event):void 
@@ -72,9 +73,9 @@ package screens
 					trace("SET");
 				break;
 				case 3:
+					timerCountDown.removeEventListener(TimerEvent.TIMER, onTik);
 					trace("GO");
 					placeObjects();
-			
 					addEventListener(Event.ENTER_FRAME, update);
 					stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDown);
 					stage.addEventListener(KeyboardEvent.KEY_UP, keyUp);
@@ -199,13 +200,22 @@ package screens
 			
 			if (ball.x <= 0) {
 				//player 2 scored
-				ui.addScore(2);
 				placeBall(2);
+				ui.addScore(2);
 			}else if (ball.x >= stage.stageWidth) {
 				//player 1 scored
-				ui.addScore(1);
 				placeBall(1);
+				ui.addScore(1);
 			}
+		}
+		
+		override public function destroy():void 
+		{
+			clearInterval(shootBallTimer);
+			removeEventListener(Event.ENTER_FRAME, update);
+			stage.removeEventListener(KeyboardEvent.KEY_DOWN, keyDown);
+			stage.removeEventListener(KeyboardEvent.KEY_UP, keyUp);
+			super.destroy();
 		}
 	}
 

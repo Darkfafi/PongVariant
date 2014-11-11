@@ -10,6 +10,9 @@ package
 	 */
 	public class UI extends Sprite
 	{	
+		public static const GAME_SET : String = "gameSet";
+		
+		private var timesToWin : int;
 		//player 1
 		private var p1Wins : int = 0;
 		private var p1Score : int = 0;
@@ -24,8 +27,9 @@ package
 		private var p2ScoreText : TextField = new TextField();
 		
 		
-		public function UI() 
+		public function UI(_timesToWin : int) 
 		{
+			timesToWin = _timesToWin;
 			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 		
@@ -75,7 +79,7 @@ package
 		public function addScore(player : int) :void{
 			if (player == 1) {
 				p1Score += 1;
-				if (p1Score >= 10) {
+				if (p1Score >= 5) {
 					p1Wins += 1;
 					p1Score = 0;
 				}
@@ -84,7 +88,7 @@ package
 			}
 			else if (player == 2) {
 				p2Score += 1;
-				if (p2Score >= 10) {
+				if (p2Score >= 5) {
 					p2Wins += 1;
 					p2Score = 0;
 				}
@@ -92,6 +96,9 @@ package
 				p2WinText.text = "P2 WINS : " + p2Wins;
 			}else {
 				Error("Score given to non valid player!");
+			}
+			if (p1Wins >= timesToWin || p2Wins >= timesToWin) {
+				dispatchEvent(new Event(GAME_SET, true));
 			}
 		}
 	}

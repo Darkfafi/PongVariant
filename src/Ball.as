@@ -14,7 +14,7 @@ package
 		private var effectArt : Sprite = new Sprite();
 		
 		public var dir : int = 0;
-		public var speed : int = 15;  // des de groter de hoek des de groter de speed
+		public var speed : int = 17; 
 		
 		private var _location : Vector2D;
 		private var _velocity : Vector2D = new Vector2D(0,0);
