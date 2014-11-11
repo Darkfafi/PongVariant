@@ -7,7 +7,7 @@ package
 	 */
 	public class Player extends Sprite
 	{
-		public var speed : Number = 10;
+		public var speed : Number = 15;
 		public var dir : int = 0;
 		
 		private var coolingDown : Boolean = false;
@@ -34,7 +34,19 @@ package
 		public function update() :void 
 		{
 			movement();
-			
+			collisionColdPlace();
+		}
+		
+		private function collisionColdPlace():void 
+		{
+			if (this.y >= stage.stageHeight - (this.height * 1.5) && !coolingDown) {
+				
+				coolingDown = true;
+				
+			}else if (coolingDown) {
+				
+				coolingDown = false;
+			}
 			if (coolingDown) {
 				growPallet();
 			}
@@ -52,13 +64,8 @@ package
 		{
 			if (this.y >= stage.stageHeight - (this.height * 1.5) && dir == 1 || this.y <= 0 - (this.height / 2) && dir == -1) {
 				dir = 0;
-				if (this.y >= stage.stageHeight - (this.height * 1.5) && !coolingDown) {
-					coolingDown = true;
-				}
 			}else {
-				if (coolingDown) {
-					coolingDown = false;
-				}
+				
 				this.y += speed * dir;
 			}
 		}
