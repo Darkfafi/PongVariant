@@ -150,7 +150,7 @@ package screens
 			if(pScred == 999){
 				shootBallTimer = setInterval(shootBall, 1000);
 			}else {
-				var choseDir = pScred == 1 ? 1 : -1;
+				var choseDir : int = pScred == 1 ? 1 : -1;
 				shootBallTimer = setInterval(shootBall, 1500,choseDir);
 			}
 		}
