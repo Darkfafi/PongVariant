@@ -17,7 +17,8 @@ package screens
 		private var showWinTimeSet : TextField = new TextField();
 		private var arrowUp : Sprite = new Sprite();
 		private var arrowDown : Sprite = new Sprite();
-		private var startButton : Sprite = new Sprite();
+		private var onePButton : Sprite = new Sprite();
+		private var twoPButton : Sprite = new Sprite();
 		
 		private var winTimeSet : int = 1;
 		
@@ -49,9 +50,13 @@ package screens
 			arrowDown.graphics.drawRect(0, 0, 30, 30);
 			arrowDown.graphics.endFill();
 			
-			startButton.graphics.beginFill(0xFFFFFF, 1);
-			startButton.graphics.drawRect(0, 0, 100, 30);
-			startButton.graphics.endFill();
+			onePButton.graphics.beginFill(0xFFFFFF, 1);
+			onePButton.graphics.drawRect(0, 0, 100, 30);
+			onePButton.graphics.endFill();
+			
+			twoPButton.graphics.beginFill(0xFF00FF, 1);
+			twoPButton.graphics.drawRect(0, 0, 100, 30);
+			twoPButton.graphics.endFill();
 			//-------------------------------------------
 			
 			
@@ -64,8 +69,11 @@ package screens
 			arrowUp.x = showWinTimeSet.x + showWinTimeSet.width + 20;
 			arrowUp.y = showWinTimeSet.y;
 			
-			startButton.x = showWinTimeSet.x;
-			startButton.y = showWinTimeSet.y + 50;
+			onePButton.x = showWinTimeSet.x;
+			onePButton.y = showWinTimeSet.y + 50;
+			
+			twoPButton.x = showWinTimeSet.x;
+			twoPButton.y = onePButton.y + 50;
 			
 			showWinTimeSet.defaultTextFormat = new TextFormat(null, 15,0xFFFFFF);
 			
@@ -76,11 +84,13 @@ package screens
 			addChild(showWinTimeSet);
 			addChild(arrowDown);
 			addChild(arrowUp);
-			addChild(startButton);
+			addChild(onePButton);
+			addChild(twoPButton);
 		}
 		
 		private function clickEvent(e:MouseEvent):void 
 		{
+			var event : Event;
 			if (e.target == arrowDown) {
 				if (winTimeSet > 1) {
 					winTimeSet --;
@@ -89,8 +99,12 @@ package screens
 				if (winTimeSet < 99) {
 					winTimeSet ++;
 				}
-			}else if (e.target == startButton) {
-				var event : Event = new StartGameEvent(START_GAME, winTimeSet, true);
+			}else if (e.target == onePButton) {
+				event = new StartGameEvent(START_GAME, winTimeSet,true, true);
+				dispatchEvent(event);
+			}
+			else if (e.target == twoPButton) {
+				event = new StartGameEvent(START_GAME, winTimeSet,false, true);
 				dispatchEvent(event);
 			}
 			showWinTimeSet.text = "Times To Win : " + winTimeSet.toString();

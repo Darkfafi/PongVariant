@@ -15,6 +15,7 @@ package screens
 	 */
 	public class Game extends Screen
 	{
+		private var aiPlaying : Boolean;
 		private var gameRunning : Boolean = true;
 		private var shootBallTimer : Number;
 		private var timerCountDown : Timer = new Timer(1000,3);
@@ -27,9 +28,10 @@ package screens
 		//Ball
 		private var ball : Ball = new Ball();
 		
-		public function Game(timesToWin : int) 
+		public function Game(timesToWin : int,singlePlayer : Boolean) 
 		{
 			addEventListener(Event.ADDED_TO_STAGE, init);
+			aiPlaying = singlePlayer;
 			ui = new UI(timesToWin);
 		}
 		
@@ -85,14 +87,16 @@ package screens
 		
 		private function keyDown(e:KeyboardEvent):void 
 		{
-			if(gameRunning){
-				//playerOne Movement
-				if (e.keyCode == Keyboard.UP) {
-					playerTwo.dir = -1;
-				}else if (e.keyCode == Keyboard.DOWN) {
-					playerTwo.dir = 1;
+			if (gameRunning) {
+				if(!aiPlaying){
+					//playerTwo Movement
+					if (e.keyCode == Keyboard.UP) {
+						playerTwo.dir = -1;
+					}else if (e.keyCode == Keyboard.DOWN) {
+						playerTwo.dir = 1;
+					}
 				}
-				//playerTwo Movement
+				//playerOne Movement
 				if (e.keyCode == Keyboard.W){
 					playerOne.dir = -1;
 				}else if (e.keyCode == Keyboard.S) {
@@ -103,11 +107,13 @@ package screens
 		
 		private function keyUp(e:KeyboardEvent):void 
 		{
-			//playerOne Movement
-			if (e.keyCode == Keyboard.UP || e.keyCode == Keyboard.DOWN) {
-				playerTwo.dir = 0;
+			if(!aiPlaying){
+				//playerTwo Movement
+				if (e.keyCode == Keyboard.UP || e.keyCode == Keyboard.DOWN) {
+					playerTwo.dir = 0;
+				}
 			}
-			//playerTwo Movement
+			//playerOne Movement
 			if (e.keyCode == Keyboard.W || e.keyCode == Keyboard.S) {
 				playerOne.dir = 0;
 			}
@@ -116,10 +122,41 @@ package screens
 		private function update(e:Event):void 
 		{
 			if (gameRunning) {
+				if(aiPlaying){
+					aiMovement();
+				}
 				playerOne.update();
 				playerTwo.update();
 				ball.update();
 				collisionBall();
+			}
+		}
+		
+		private function aiMovement():void 
+		{
+			if (ball.dir == 1 && playerTwo.scaleY > 0.5) {
+				var chance : int =  2;
+				if(ball.x > stage.stageWidth / chance){
+					if (ball.y - playerTwo.y - playerTwo.height < 20 && ball.y - playerTwo.y - playerTwo.height > -20) {
+						playerTwo.dir = 0;
+					}
+					else if (ball.y > playerTwo.y + playerTwo.height) {
+						playerTwo.dir = 1;
+					}else if (ball.y < playerTwo.y + playerTwo.height) {
+						playerTwo.dir = -1;
+					}
+				}
+			}else if(playerTwo.scaleY <= 0.5){
+				playerTwo.dir = 1;
+			}else if (ball.dir < 1 && playerTwo.y >= stage.stageHeight) {
+				if (stage.stageHeight / 2 - playerTwo.y - playerTwo.height < 20 && stage.stageHeight / 2 - playerTwo.y - playerTwo.height > -20) {
+					playerTwo.dir = 0;
+				}
+				else if (stage.stageHeight / 2 > playerTwo.y + playerTwo.height) {
+					playerTwo.dir = 1;
+				}else if (stage.stageHeight / 2 < playerTwo.y + playerTwo.height) {
+					playerTwo.dir = -1;
+				}
 			}
 		}
 		

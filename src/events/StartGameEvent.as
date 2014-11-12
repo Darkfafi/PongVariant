@@ -8,11 +8,12 @@ package events
 	public class StartGameEvent extends Event
 	{
 		public var timesToWin : int;
-		
-		public function StartGameEvent(strng : String,winTimes : int, bub : Boolean) 
+		public var aiPlaying : Boolean;
+		public function StartGameEvent(strng : String,winTimes : int,singlePlayer : Boolean, bub : Boolean) 
 		{
 			super(strng, bub);
 			timesToWin = winTimes;
+			aiPlaying = singlePlayer;
 		}
 		
 	}

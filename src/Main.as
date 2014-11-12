@@ -19,8 +19,9 @@ package
 		private var menu : Menu = new Menu();
 		
 		private var timesToWin : int;
+		private var singlePlayer : Boolean;
 		
-		private var game : Game = new Game(0);
+		private var game : Game = new Game(0,true);
 		
 		public function Main():void 
 		{
@@ -45,7 +46,7 @@ package
 						menu = null;
 					}
 					addEventListener(UI.GAME_SET, gameEnd);
-					game = new Game(timesToWin);
+					game = new Game(timesToWin,singlePlayer);
 					addChild(game);
 				break
 				case MENU_SCREEN:
@@ -67,6 +68,7 @@ package
 		{
 			var event : StartGameEvent = e as StartGameEvent;
 			timesToWin = event.timesToWin;
+			singlePlayer = event.aiPlaying;
 			switchScreen(GAME_SCREEN);
 		}
 		
