@@ -20,7 +20,7 @@ package
 		public function movement():void 
 		{
 			if (ball.dir == 1 && player.scaleY > 0.5) {
-				var chance : int =  2;
+				var chance : int =  3;
 				if (ball.x > stage.stageWidth / chance) {
 					if (ball.y - player.y < 5 && ball.y - player.y > -13) {
 						player.dir = 0;

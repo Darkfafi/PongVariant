@@ -1,6 +1,7 @@
 package screens 
 {
 	import flash.display.DisplayObject;
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	/**
 	 * ...
@@ -15,7 +16,7 @@ package screens
 			
 			for (var i : int = l - 1; i >= 0; i--) {
 				cur = getChildAt(i);
-				if (cur is Sprite) {
+				if (cur is Sprite || cur is MovieClip) {
 					removeChild(cur);
 				}
 			}

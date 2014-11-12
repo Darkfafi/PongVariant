@@ -69,17 +69,8 @@ package screens
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
-			var backGround : MovieClip = new GameBG();
-			var cool1 : MovieClip = new CoolPlaceArt();
-			var cool2 : MovieClip = new CoolPlaceArt();
-			addChild(backGround);
-			cool1.x = cool1.width / 2;
-			cool1.y = stage.stageHeight;
-			cool2.x = stage.stageWidth - cool2.width / 2; 
-			cool2.y = cool1.y;
-			addChild(cool1);
-			addChild(cool2);
-			
+			var background : Sprite = new Background();
+			addChild(background);
 			startGame();
 			
 			addChild(ui);
@@ -163,11 +154,11 @@ package screens
 		private function placeObjects():void 
 		{
 			
-			playerOne.x = 50;
+			playerOne.x = 75;
 			playerOne.y = stage.stageHeight / 2;
-			playerOne.rotation = 180;
+			playerOne.scaleX = -1;
 			
-			playerTwo.x = stage.stageWidth - 50 - playerTwo.width / 2;
+			playerTwo.x = stage.stageWidth - 75;
 			playerTwo.y = playerOne.y;
 			
 			placeBall();

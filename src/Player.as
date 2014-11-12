@@ -1,5 +1,6 @@
 package  
 {
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	/**
 	 * ...
@@ -16,6 +17,7 @@ package
 		private var growSpeed : Number = 0.01;
 		
 		private var art : Sprite = new Sprite();
+		private var meltEffect : MovieClip;
 		
 		public function Player() 
 		{
@@ -25,6 +27,7 @@ package
 		private function drawPlayer():void 
 		{
 			art = new PlayerArt();
+			meltEffect = new DripEffect();
 			addChild(art);
 		}
 		
@@ -32,6 +35,12 @@ package
 		{
 			movement();
 			collisionColdPlace();
+			if(parent.contains(meltEffect)){
+				if (meltEffect.currentFrame == meltEffect.totalFrames) {
+					meltEffect.gotoAndStop(1);
+					parent.removeChild(meltEffect);
+				}
+			}
 		}
 		
 		private function collisionColdPlace():void 
@@ -70,7 +79,11 @@ package
 		public function meltPlayer() :void {
 			if (scaleY >= 0.25) {
 				scaleY -= meltSpeed;
-				//Laat druppel zien
+				
+				meltEffect.x = this.x;
+				meltEffect.y = this.y + this.height;
+				parent.addChild(meltEffect); // kon ook met visable = true en false but hey. coding on the edge 
+				meltEffect.gotoAndPlay(5);
 			}
 		}
 	}
