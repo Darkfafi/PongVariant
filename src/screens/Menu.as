@@ -77,7 +77,7 @@ package screens
 			
 			showWinTimeSet.defaultTextFormat = new TextFormat(null, 15,0xFFFFFF);
 			
-			showWinTimeSet.text = "Times To Win : " + winTimeSet.toString();
+			showWinTimeSet.text = "Rounds To Win : " + winTimeSet.toString();
 			showWinTimeSet.width = 200;
 			showWinTimeSet.selectable = false;
 			
@@ -107,7 +107,7 @@ package screens
 				event = new StartGameEvent(START_GAME, winTimeSet,false, true);
 				dispatchEvent(event);
 			}
-			showWinTimeSet.text = "Times To Win : " + winTimeSet.toString();
+			showWinTimeSet.text = "Rounds To Win : " + winTimeSet.toString();
 		}
 		
 	}

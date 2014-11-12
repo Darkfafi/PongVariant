@@ -55,13 +55,13 @@ package
 			p2ScoreText.width = 200;
 			p2WinText.width = 200;
 			
-			p1WinText.text = "P1 WINS : 00";
-			p2WinText.text = "P2 WINS : 00";
+			p1WinText.text = "P1 Rounds Won : 00";
+			p2WinText.text = "P2 Rounds Won : 00";
 			
 			p1ScoreText.text = "SCORE : 00";
 			p2ScoreText.text = "SCORE : 00";
 			
-			p1WinText.x = stage.stageWidth / 3;
+			p1WinText.x = stage.stageWidth / 4;
 			p2WinText.x = stage.stageWidth / 1.9;
 			
 			p1ScoreText.x = p1WinText.x;
@@ -84,7 +84,7 @@ package
 					p1Score = 0;
 				}
 				p1ScoreText.text = "SCORE : " + p1Score;
-				p1WinText.text = "P1 WINS : " + p1Wins;
+				p1WinText.text = "P1 Rounds Won : " + p1Wins;
 			}
 			else if (player == 2) {
 				p2Score += 1;
@@ -93,7 +93,7 @@ package
 					p2Score = 0;
 				}
 				p2ScoreText.text = "SCORE : " + p2Score;
-				p2WinText.text = "P2 WINS : " + p2Wins;
+				p2WinText.text = "P2 Rounds Won : " + p2Wins;
 			}else {
 				Error("Score given to non valid player!");
 			}

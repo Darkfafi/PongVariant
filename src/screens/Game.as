@@ -20,6 +20,7 @@ package screens
 		private var shootBallTimer : Number;
 		private var timerCountDown : Timer = new Timer(1000,3);
 		private var ui : UI;
+		private var ai : AI;
 		
 		//Players
 		private var playerOne : Player = new Player();
@@ -123,7 +124,7 @@ package screens
 		{
 			if (gameRunning) {
 				if(aiPlaying){
-					aiMovement();
+					ai.movement();
 				}
 				playerOne.update();
 				playerTwo.update();
@@ -131,35 +132,6 @@ package screens
 				collisionBall();
 			}
 		}
-		
-		private function aiMovement():void 
-		{
-			if (ball.dir == 1 && playerTwo.scaleY > 0.5) {
-				var chance : int =  2;
-				if(ball.x > stage.stageWidth / chance){
-					if (ball.y - playerTwo.y - playerTwo.height < 20 && ball.y - playerTwo.y - playerTwo.height > -20) {
-						playerTwo.dir = 0;
-					}
-					else if (ball.y > playerTwo.y + playerTwo.height) {
-						playerTwo.dir = 1;
-					}else if (ball.y < playerTwo.y + playerTwo.height) {
-						playerTwo.dir = -1;
-					}
-				}
-			}else if(playerTwo.scaleY <= 0.5){
-				playerTwo.dir = 1;
-			}else if (ball.dir < 1 && playerTwo.y >= stage.stageHeight) {
-				if (stage.stageHeight / 2 - playerTwo.y - playerTwo.height < 20 && stage.stageHeight / 2 - playerTwo.y - playerTwo.height > -20) {
-					playerTwo.dir = 0;
-				}
-				else if (stage.stageHeight / 2 > playerTwo.y + playerTwo.height) {
-					playerTwo.dir = 1;
-				}else if (stage.stageHeight / 2 < playerTwo.y + playerTwo.height) {
-					playerTwo.dir = -1;
-				}
-			}
-		}
-		
 		private function placeObjects():void 
 		{
 			
@@ -174,6 +146,9 @@ package screens
 			addChild(playerOne);
 			addChild(playerTwo);
 			addChild(ball);
+			if(aiPlaying){
+				ai = new AI(ball, playerTwo,stage);
+			}
 		}
 		
 		private function placeBall(pScred : int = 999):void 
