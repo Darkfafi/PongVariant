@@ -1,5 +1,6 @@
 package  
 {
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import utils.Vector2D;
@@ -11,7 +12,7 @@ package
 	{
 		//zijn rotatie en directie word verandert na hitten. de directie meld de hit test. dus bal met dir 1 kan alleen speler 1 raken en anders speler 2
 		public var ballArt : Sprite = new Sprite();
-		private var effectArt : Sprite = new Sprite();
+		private var effectArt : MovieClip = new MovieClip();
 		
 		public var dir : int = 0;
 		public var speed : int = 17;  // des de groter de hoek des de groter de speed
@@ -39,10 +40,7 @@ package
 			ballArt.graphics.drawCircle(0, 0, 10);
 			ballArt.graphics.endFill();
 			
-			effectArt.graphics.beginFill(0xFF00FF, 1);
-			effectArt.graphics.drawCircle(-10, 0, 10);
-			effectArt.graphics.endFill();
-			
+			effectArt = new BallEffect();
 			addChild(effectArt);
 			addChild(ballArt);
 		}

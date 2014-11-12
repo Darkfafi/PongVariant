@@ -5,6 +5,7 @@ package
 	import flash.events.Event;
 	import screens.Game;
 	import screens.Menu;
+	import media.SoundManager;
 	
 	/**
 	 * ...
@@ -33,7 +34,16 @@ package
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			// entry point
-			switchScreen(MENU_SCREEN);
+			SoundManager.loadSounds();
+			addEventListener(Event.ENTER_FRAME, checkSoundLoaded);
+		}
+		
+		private function checkSoundLoaded(e:Event):void 
+		{
+			if (SoundManager.allSoundsLoaded) {
+				removeEventListener(Event.ENTER_FRAME, checkSoundLoaded);
+				switchScreen(MENU_SCREEN);
+			}
 		}
 		
 		private function switchScreen(screen : String) :void {
@@ -45,13 +55,13 @@ package
 						removeChild(menu);
 						menu = null;
 					}
-					addEventListener(UI.GAME_SET, gameEnd);
+					addEventListener(Game.GOTO_MENU, gameEnd);
 					game = new Game(timesToWin,singlePlayer);
 					addChild(game);
 				break
 				case MENU_SCREEN:
 					if (contains(game)) {
-						removeEventListener(UI.GAME_SET, gameEnd);
+						removeEventListener(Game.GOTO_MENU, gameEnd);
 						game.destroy();
 						removeChild(game);
 						game = null;

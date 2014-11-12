@@ -1,5 +1,6 @@
 package  
 {
+	import events.EndGameEvent;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.text.TextField;
@@ -98,7 +99,13 @@ package
 				Error("Score given to non valid player!");
 			}
 			if (p1Wins >= timesToWin || p2Wins >= timesToWin) {
-				dispatchEvent(new Event(GAME_SET, true));
+				var e : EndGameEvent;
+				if (p1Wins >= timesToWin) {
+					 e = new EndGameEvent(GAME_SET, 1, true);
+				}else {
+					e = new EndGameEvent(GAME_SET, 2, true);
+				}
+				dispatchEvent(e);
 			}
 		}
 	}

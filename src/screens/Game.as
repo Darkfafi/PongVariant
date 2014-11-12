@@ -1,9 +1,13 @@
 package screens 
 {
+	import events.EndGameEvent;
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.TimerEvent;
+	import flash.text.TextField;
+	import flash.text.TextFormat;
 	import flash.ui.Keyboard;
 	import flash.utils.Timer;
 	import utils.Vector2D;
@@ -15,6 +19,8 @@ package screens
 	 */
 	public class Game extends Screen
 	{
+		public static const GOTO_MENU : String = "gotoMenu";
+		
 		private var aiPlaying : Boolean;
 		private var gameRunning : Boolean = true;
 		private var shootBallTimer : Number;
@@ -34,23 +40,45 @@ package screens
 			addEventListener(Event.ADDED_TO_STAGE, init);
 			aiPlaying = singlePlayer;
 			ui = new UI(timesToWin);
+			addEventListener(UI.GAME_SET, endGame);
+		}
+		
+		private function endGame(e:Event):void 
+		{
+			removeEventListener(UI.GAME_SET, endGame);
+			var event : EndGameEvent = e as EndGameEvent;
+			gameRunning = false;
+			removeChild(ball);
+			
+			var endText : TextField = new TextField();
+			endText.defaultTextFormat = new TextFormat(null, 30, 0xFF00FF);
+			endText.text = "PLAYER " +  event.playerWon + " WON!";
+			endText.width = 300;
+			endText.x = stage.stageWidth / 3;
+			endText.y = stage.stageHeight / 2;
+			addChild(endText);
+			setInterval(returnMenu, 3000);
+		}
+		
+		private function returnMenu():void 
+		{
+			dispatchEvent(new Event(GOTO_MENU, true));
 		}
 		
 		private function init(e:Event):void 
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
-			//background placeHolder
-				var backGround : Sprite = new Sprite();
-				backGround.graphics.beginFill(0x000000, 1);
-				backGround.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
-				backGround.graphics.lineStyle(2, 0x000000,1);
-				backGround.graphics.endFill();
-				backGround.graphics.beginFill(0xffffff, 1);
-				backGround.graphics.drawRect(stage.stageWidth / 2, 0, 4, stage.stageHeight);
-				backGround.graphics.endFill();
-				addChild(backGround);
-			//----------------------------------
+			var backGround : MovieClip = new GameBG();
+			var cool1 : MovieClip = new CoolPlaceArt();
+			var cool2 : MovieClip = new CoolPlaceArt();
+			addChild(backGround);
+			cool1.x = cool1.width / 2;
+			cool1.y = stage.stageHeight;
+			cool2.x = stage.stageWidth - cool2.width / 2; 
+			cool2.y = cool1.y;
+			addChild(cool1);
+			addChild(cool2);
 			
 			startGame();
 			
@@ -136,7 +164,8 @@ package screens
 		{
 			
 			playerOne.x = 50;
-			playerOne.y = stage.stageHeight / 2 - playerOne.height * 1.25;
+			playerOne.y = stage.stageHeight / 2;
+			playerOne.rotation = 180;
 			
 			playerTwo.x = stage.stageWidth - 50 - playerTwo.width / 2;
 			playerTwo.y = playerOne.y;
@@ -189,7 +218,8 @@ package screens
 			if (ball.ballArt.hitTestObject(playerOne) && ball.dir == -1) {
 				
 				ball.rotateDirection();
-				var hit1 : Number = (playerOne.height - (ball.y - playerOne.y));
+				
+				var hit1 : Number = (playerOne.y - ball.y);
 				hit1 = (hit1 * -2) / 10;
 				
 				playerOne.meltPlayer();
@@ -199,7 +229,7 @@ package screens
 				
 				ball.rotateDirection();
 				
-				var hit2 : Number = (playerTwo.height - (ball.y - playerTwo.y));
+				var hit2 : Number = (playerTwo.y - ball.y);
 				hit2 = (hit2 * -2) / 10;
 				
 				playerTwo.meltPlayer();
@@ -210,11 +240,11 @@ package screens
 				ball.setRotation(ball.velocity.y * -1);
 			}
 			
-			if (ball.x <= 0) {
+			if (ball.x + ball.width <= 0) {
 				//player 2 scored
 				placeBall(2);
 				ui.addScore(2);
-			}else if (ball.x >= stage.stageWidth) {
+			}else if (ball.x - ball.width >= stage.stageWidth) {
 				//player 1 scored
 				placeBall(1);
 				ui.addScore(1);

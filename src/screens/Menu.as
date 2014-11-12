@@ -1,6 +1,7 @@
 package screens 
 {
 	import events.StartGameEvent;
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -36,10 +37,8 @@ package screens
 		
 		private function placeMenu():void 
 		{
-			//background placeholder
-			graphics.beginFill(0x000000, 1);
-			graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
-			graphics.endFill();
+			var background : MovieClip = new MenuBG();
+			addChild(background);
 			
 			//draw placeholders buttons
 			arrowUp.graphics.beginFill(0x00FF00, 1);

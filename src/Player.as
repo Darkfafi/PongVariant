@@ -24,10 +24,7 @@ package
 		
 		private function drawPlayer():void 
 		{
-			art.graphics.beginFill(0x0099FF, 1);
-			art.graphics.drawRect(0, 40, 15, 80);
-			art.graphics.endFill();
-			
+			art = new PlayerArt();
 			addChild(art);
 		}
 		
@@ -39,7 +36,7 @@ package
 		
 		private function collisionColdPlace():void 
 		{
-			if (this.y >= stage.stageHeight - (this.height * 1.5) && !coolingDown) {
+			if (this.y >= stage.stageHeight - this.height && !coolingDown) {
 				
 				coolingDown = true;
 				
@@ -62,7 +59,7 @@ package
 		
 		private function movement():void 
 		{
-			if (this.y >= stage.stageHeight - (this.height * 1.5) && dir == 1 || this.y <= 0 - (this.height / 2) && dir == -1) {
+			if (this.y >= stage.stageHeight - this.height / 2 && dir == 1 || this.y <= 0 + (this.height / 2) && dir == -1) {
 				dir = 0;
 			}else {
 				
@@ -73,6 +70,7 @@ package
 		public function meltPlayer() :void {
 			if (scaleY >= 0.25) {
 				scaleY -= meltSpeed;
+				//Laat druppel zien
 			}
 		}
 	}

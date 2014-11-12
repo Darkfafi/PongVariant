@@ -52,7 +52,7 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <!-- example: <element path="..." /> -->
+    <element path="bin\art_for_game.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
