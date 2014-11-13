@@ -41,41 +41,32 @@ package screens
 			var background : MovieClip = new MenuBG();
 			addChild(background);
 			SoundManager.playSound(SoundManager.MENU_BG_MUSIC);
-			//draw placeholders buttons
-			arrowUp.graphics.beginFill(0x00FF00, 1);
-			arrowUp.graphics.drawRect(0, 0, 30, 30);
-			arrowUp.graphics.endFill();
 			
-			arrowDown.graphics.beginFill(0xFF0000, 1);
-			arrowDown.graphics.drawRect(0, 0, 30, 30);
-			arrowDown.graphics.endFill();
+			arrowUp = new ArrowButton();
 			
-			onePButton.graphics.beginFill(0xFFFFFF, 1);
-			onePButton.graphics.drawRect(0, 0, 100, 30);
-			onePButton.graphics.endFill();
+			arrowDown = new ArrowButton();
+			arrowDown.scaleY = -1;
 			
-			twoPButton.graphics.beginFill(0xFF00FF, 1);
-			twoPButton.graphics.drawRect(0, 0, 100, 30);
-			twoPButton.graphics.endFill();
-			//-------------------------------------------
+			onePButton = new OnePlayerButton();
+
+			twoPButton = new TwoPlayerButton();
 			
-			
-			showWinTimeSet.x = stage.stageWidth / 2.2;
+			showWinTimeSet.x = stage.stageWidth / 2.4;
 			showWinTimeSet.y = stage.stageHeight / 2;
 			
-			arrowDown.x = showWinTimeSet.x - 45;
-			arrowDown.y = showWinTimeSet.y;
+			arrowDown.x = showWinTimeSet.x - 30;
+			arrowDown.y = showWinTimeSet.y + arrowDown.height;
 			
-			arrowUp.x = showWinTimeSet.x + showWinTimeSet.width + 20;
+			arrowUp.x = showWinTimeSet.x + showWinTimeSet.width + 55;
 			arrowUp.y = showWinTimeSet.y;
 			
-			onePButton.x = showWinTimeSet.x;
-			onePButton.y = showWinTimeSet.y + 50;
+			onePButton.x = showWinTimeSet.x - 20;
+			onePButton.y = showWinTimeSet.y + 75;
 			
-			twoPButton.x = showWinTimeSet.x;
-			twoPButton.y = onePButton.y + 50;
+			twoPButton.x = onePButton.x;
+			twoPButton.y = onePButton.y + 100;
 			
-			showWinTimeSet.defaultTextFormat = new TextFormat(null, 15,0xFFFFFF);
+			showWinTimeSet.defaultTextFormat = new TextFormat(null, 19,0xFFFFFF);
 			
 			showWinTimeSet.text = "Rounds To Win : " + winTimeSet.toString();
 			showWinTimeSet.width = 200;

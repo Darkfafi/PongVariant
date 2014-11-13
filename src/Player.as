@@ -2,6 +2,7 @@ package
 {
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
+	import media.SoundManager;
 	/**
 	 * ...
 	 * @author Ramses di Perna
@@ -63,6 +64,7 @@ package
 			if (this.scaleY < 1) {
 				this.scaleY += growSpeed;
 				y -= 1 - growSpeed;
+				SoundManager.playSound(SoundManager.GROW_PLAYER_SOUND);
 			}
 		}
 		

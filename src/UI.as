@@ -44,6 +44,9 @@ package
 		
 		private function placeTextUI():void 
 		{
+			var hudScoreP1 : GameScoreHudArt = new GameScoreHudArt();
+			var hudScoreP2 : GameScoreHudArt = new GameScoreHudArt();
+			
 			var format : TextFormat = new TextFormat(null, 20, 0xFFFFFF);
 			
 			p1WinText.defaultTextFormat = format;
@@ -62,14 +65,30 @@ package
 			p1ScoreText.text = "SCORE : 00";
 			p2ScoreText.text = "SCORE : 00";
 			
-			p1WinText.x = stage.stageWidth / 4;
-			p2WinText.x = stage.stageWidth / 1.9;
+			p1WinText.x = 110;
+			p2WinText.x = stage.stageWidth - 280;
+			
+			p1WinText.y = 50;
+			p2WinText.y = 50;
 			
 			p1ScoreText.x = p1WinText.x;
 			p2ScoreText.x = p2WinText.x;
 			
-			p1ScoreText.y = 25;
-			p2ScoreText.y = 25;
+			p1ScoreText.y = p1WinText.y + 25;
+			p2ScoreText.y = p2WinText.y + 25;
+			
+			hudScoreP1.x = p1WinText.x - 10;
+			hudScoreP1.y = p1WinText.y - 10;
+			
+			hudScoreP2.scaleX = -1;
+			hudScoreP2.x = p2WinText.x + hudScoreP2.width / 1.3;
+			hudScoreP2.y = p2WinText.y - 10;
+			
+			hudScoreP1.alpha = 0.87;
+			hudScoreP2.alpha = 0.87;
+			
+			addChild(hudScoreP1);
+			addChild(hudScoreP2);
 			
 			addChild(p1WinText);
 			addChild(p1ScoreText);

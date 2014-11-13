@@ -51,13 +51,17 @@ package screens
 			gameRunning = false;
 			removeChild(ball);
 			
-			var endText : TextField = new TextField();
-			endText.defaultTextFormat = new TextFormat(null, 30, 0xFF00FF);
-			endText.text = "PLAYER " +  event.playerWon + " WON!";
-			endText.width = 300;
-			endText.x = stage.stageWidth / 3;
-			endText.y = stage.stageHeight / 2;
+			var endText : MovieClip;
+			
+			if (event.playerWon == 1) {
+				endText = new PlayerOneWins();
+			}else {
+				endText = new PlayerTwoWins();
+			}
+			endText.x = stage.stageWidth / 2 - endText.width / 2.5;
+			endText.y = stage.stageWidth / 3;
 			addChild(endText);
+			
 			setInterval(returnMenu, 3000);
 		}
 		
@@ -91,14 +95,17 @@ package screens
 			switch(t.currentCount) {				
 				case 1:
 					trace("READY");
+					SoundManager.playSound(SoundManager.READY_BEGIN);
 				break;
 					
 				case 2:
 					trace("SET");
+					SoundManager.playSound(SoundManager.READY_BEGIN);
 				break;
 				case 3:
 					timerCountDown.removeEventListener(TimerEvent.TIMER, onTik);
 					trace("GO");
+					SoundManager.playSound(SoundManager.READY_END);
 					placeObjects();
 					addEventListener(Event.ENTER_FRAME, update);
 					stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDown);
@@ -209,7 +216,7 @@ package screens
 		
 		private function collisionBall() :void {
 			if (ball.ballArt.hitTestObject(playerOne) && ball.dir == -1) {
-				
+				SoundManager.playSound(SoundManager.BALL_PANNEL_COLLSION);
 				ball.rotateDirection();
 				
 				var hit1 : Number = (playerOne.y - ball.y);
@@ -219,7 +226,7 @@ package screens
 				ball.setRotation(hit1);
 				
 			}else if (ball.ballArt.hitTestObject(playerTwo) && ball.dir == 1) {
-				
+				SoundManager.playSound(SoundManager.BALL_PANNEL_COLLSION);
 				ball.rotateDirection();
 				
 				var hit2 : Number = (playerTwo.y - ball.y);
@@ -232,7 +239,8 @@ package screens
 			if (ball.y >= stage.stageHeight || ball.y <= 0) {
 				ball.setRotation(ball.velocity.y * -1);
 				if (ball.y >= stage.stageHeight) {
-					if(ball.speed < 17 + 5){
+					if (ball.speed < 17 + 5) {
+						SoundManager.playSound(SoundManager.UPGRADE_BALL_SOUND);
 						ball.speed += 1;
 						ball.setVelocity(ball.speed);
 					}
