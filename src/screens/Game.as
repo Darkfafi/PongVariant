@@ -177,7 +177,7 @@ package screens
 			ball.setVelocity(0);
 			ball.setRotation(0);
 			ball.dir = 0;
-			
+			ball.speed = 17;
 			//zet bal animatie op idle
 			
 			if(pScred == 999){
@@ -229,6 +229,12 @@ package screens
 			
 			if (ball.y >= stage.stageHeight || ball.y <= 0) {
 				ball.setRotation(ball.velocity.y * -1);
+				if (ball.y >= stage.stageHeight) {
+					if(ball.speed < 17 + 5){
+						ball.speed += 1;
+						ball.setVelocity(ball.speed);
+					}
+				}
 			}
 			
 			if (ball.x + ball.width <= 0) {

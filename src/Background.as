@@ -26,16 +26,16 @@ package
 			
 			cool1.x = cool1.width / 1.5;
 			cool1.y = stage.stageHeight;
-			cool2.x = stage.stageWidth - cool2.width / 2; 
+			cool2.x = stage.stageWidth - cool2.width / 1.5; 
 			cool2.y = cool1.y;
-			/*
-			for (var i : uint = 0; i < 4; i++) {
+			
+			for (var i : uint = 0; i < 1; i++) {
 				var fireWall : MovieClip = new FlameWall();
 				switch(i) {
 					case 0:
-						fireWall.x = stage.stageWidth / 2;
-						fireWall.y = - 15;
-						fireWall.rotation = 180;
+						fireWall.x = stage.stageWidth / 2.05;
+						fireWall.y = stage.stageHeight + 20;
+						fireWall.scaleX = 0.67;
 					break;
 					case 1:
 						fireWall.x = -15;
@@ -49,12 +49,13 @@ package
 					break;
 					case 3:
 						fireWall.x = stage.stageWidth / 2;
-						fireWall.y = stage.stageHeight + 15;
+						fireWall.y = - 15;
+						fireWall.rotation = 180;
 					break;
 				}
 				addChild(fireWall);
 			}
-			*/
+			
 			addChild(cool1);
 			addChild(cool2);
 			

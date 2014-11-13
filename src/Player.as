@@ -8,7 +8,7 @@ package
 	 */
 	public class Player extends Sprite
 	{
-		public var speed : Number = 15;
+		public var speed : Number = 16;
 		public var dir : int = 0;
 		
 		private var coolingDown : Boolean = false;
