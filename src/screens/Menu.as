@@ -54,10 +54,10 @@ package screens
 			showWinTimeSet.x = stage.stageWidth / 2.4;
 			showWinTimeSet.y = stage.stageHeight / 2;
 			
-			arrowDown.x = showWinTimeSet.x - 30;
+			arrowDown.x = showWinTimeSet.x - 35;
 			arrowDown.y = showWinTimeSet.y + arrowDown.height;
 			
-			arrowUp.x = showWinTimeSet.x + showWinTimeSet.width + 55;
+			arrowUp.x = showWinTimeSet.x + showWinTimeSet.width + 65;
 			arrowUp.y = showWinTimeSet.y;
 			
 			onePButton.x = showWinTimeSet.x - 20;

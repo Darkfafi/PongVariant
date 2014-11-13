@@ -1,6 +1,7 @@
 package  
 {
 	import events.EndGameEvent;
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.text.TextField;
@@ -59,11 +60,11 @@ package
 			p2ScoreText.width = 200;
 			p2WinText.width = 200;
 			
-			p1WinText.text = "P1 Rounds Won : 00";
-			p2WinText.text = "P2 Rounds Won : 00";
+			p1WinText.text = "P1 Rounds Won : 0";
+			p2WinText.text = "P2 Rounds Won : 0";
 			
-			p1ScoreText.text = "SCORE : 00";
-			p2ScoreText.text = "SCORE : 00";
+			p1ScoreText.text = "SCORE : 0";
+			p2ScoreText.text = "SCORE : 0";
 			
 			p1WinText.x = 110;
 			p2WinText.x = stage.stageWidth - 280;
@@ -94,6 +95,15 @@ package
 			addChild(p1ScoreText);
 			addChild(p2WinText);
 			addChild(p2ScoreText);
+			
+			var l : int = this.numChildren;
+			var child : TextField;
+			for (var i : int = 0; i < l; i++) {
+				if (getChildAt(i) is TextField) {
+					child = getChildAt(i) as TextField;
+					child.selectable = false;
+				}
+			}
 		}
 		
 		public function addScore(player : int) :void{
