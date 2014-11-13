@@ -16,7 +16,7 @@ package screens
 			
 			for (var i : int = l - 1; i >= 0; i--) {
 				cur = getChildAt(i);
-				if (cur is Sprite || cur is MovieClip) {
+				if (cur is Sprite) {
 					removeChild(cur);
 				}
 			}

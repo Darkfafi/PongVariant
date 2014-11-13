@@ -24,9 +24,9 @@ package
 			var cool2 : MovieClip = new CoolPlaceArt();
 			addChild(backGround);
 			
-			cool1.x = cool1.width / 1.5;
+			cool1.x = cool1.width / 2;
 			cool1.y = stage.stageHeight;
-			cool2.x = stage.stageWidth - cool2.width / 1.5; 
+			cool2.x = stage.stageWidth - cool2.width / 2; 
 			cool2.y = cool1.y;
 			
 			for (var i : uint = 0; i < 1; i++) {
@@ -34,7 +34,7 @@ package
 				switch(i) {
 					case 0:
 						fireWall.x = stage.stageWidth / 2.05;
-						fireWall.y = stage.stageHeight + 20;
+						fireWall.y = stage.stageHeight + 25;
 						fireWall.scaleX = 0.67;
 					break;
 					case 1:

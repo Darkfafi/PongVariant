@@ -43,6 +43,7 @@ package
 			effectArt = new BallEffect();
 			addChild(effectArt);
 			addChild(ballArt);
+			ballArt.visible = false;
 		}
 		public function update() :void 
 		{
@@ -50,6 +51,8 @@ package
 		}
 		public function setVelocity(_speed : int) : void {
 			speed = _speed;
+			effectArt.scaleX = 1 + (speed - 17) / 10; 
+			effectArt.scaleY = 1 + (speed - 17) / 10; 
 			_velocity = new Vector2D(speed * dir, _velocity.y);
 		}
 		public function setRotation(_rotation : Number) : void {

@@ -13,6 +13,9 @@ package media
 	 */
 	public class SoundManager
 	{
+		public static const MENU_BG_MUSIC : int = 0;
+		public static const GAME_BG_MUSIC : int = 1;
+		
 		private static var buttonTransform : SoundTransform = new SoundTransform(0.5);
 		private static var musicTransform : SoundTransform = new SoundTransform(0.5);
 		
@@ -28,7 +31,8 @@ package media
 		public static function loadSounds() : void {
 			
 			// music
-			
+			allUrls.push(new URLRequest("http://15826.hosts.ma-cloud.nl/Leerjaar2/Projecten/PongGame/sounds/Instrument.mp3")); // Menu Music
+			allUrls.push(new URLRequest("http://15826.hosts.ma-cloud.nl/Leerjaar2/Projecten/PongGame/sounds/Instrument2.mp3")); // Game Music
 			
 			//sounds/effects
 			for (var i : int = 0; i < allUrls.length; i++) {
@@ -57,8 +61,15 @@ package media
 			var sound : Sound = new Sound();
 			
 			sound = allSounds[soundInt];
-			if (sound != null) {
-				soundChannel = sound.play(0, 0);
+			if(sound != null){
+				if (sound == allSounds[MENU_BG_MUSIC] || sound == allSounds[GAME_BG_MUSIC]) {
+					musicChannel.stop();
+					trace(sound);
+					musicChannel = sound.play(0, 9999);	
+				}
+				else {
+					soundChannel = sound.play(0, 0);
+				}
 			}
 		}
 	}

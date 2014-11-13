@@ -7,6 +7,7 @@ package screens
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
+	import media.SoundManager;
 	/**
 	 * ...
 	 * @author Ramses di Perna
@@ -39,7 +40,7 @@ package screens
 		{
 			var background : MovieClip = new MenuBG();
 			addChild(background);
-			
+			SoundManager.playSound(SoundManager.MENU_BG_MUSIC);
 			//draw placeholders buttons
 			arrowUp.graphics.beginFill(0x00FF00, 1);
 			arrowUp.graphics.drawRect(0, 0, 30, 30);

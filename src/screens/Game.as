@@ -10,6 +10,7 @@ package screens
 	import flash.text.TextFormat;
 	import flash.ui.Keyboard;
 	import flash.utils.Timer;
+	import media.SoundManager;
 	import utils.Vector2D;
 	import flash.utils.setInterval;
 	import flash.utils.clearInterval;
@@ -80,6 +81,7 @@ package screens
 		{	
 			timerCountDown.addEventListener(TimerEvent.TIMER, onTik);
 			timerCountDown.start();
+			SoundManager.playSound(SoundManager.GAME_BG_MUSIC);
 		}
 		
 		private function onTik(e:Event):void 
@@ -178,6 +180,7 @@ package screens
 			ball.setRotation(0);
 			ball.dir = 0;
 			ball.speed = 17;
+			ball.rotation = 270;
 			//zet bal animatie op idle
 			
 			if(pScred == 999){
@@ -199,10 +202,9 @@ package screens
 				ball.dir = _dir;
 			}
 			rot = ball.dir == 1 ? 0 : 180;
+			ball.rotation = 0;
 			ball.rotation = rot;
 			ball.setVelocity(ball.speed);
-			
-			//zet bal animatie op moving
 		}
 		
 		private function collisionBall() :void {
