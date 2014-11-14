@@ -25,6 +25,8 @@ package
 		private var timesToWin : int;
 		private var singlePlayer : Boolean;
 		
+		private var loadingScreen : LoadingScreen = new LoadingScreen();
+		
 		private var game : Game = new Game(0,true);
 		
 		public function Main():void 
@@ -44,9 +46,14 @@ package
 		private function checkSoundLoaded(e:Event):void 
 		{
 			if (SoundManager.allSoundsLoaded) {
+				if (contains(loadingScreen)) {
+					removeChild(loadingScreen);
+				}
 				removeEventListener(Event.ENTER_FRAME, checkSoundLoaded);
 				switchScreen(MENU_SCREEN);
 				addSoundButtons();
+			}else if (!contains(loadingScreen)) {
+				addChild(loadingScreen);
 			}
 		}
 		
