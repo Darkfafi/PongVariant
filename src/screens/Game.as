@@ -1,6 +1,7 @@
 package screens 
 {
 	import events.EndGameEvent;
+	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -23,6 +24,7 @@ package screens
 		public static const GOTO_MENU : String = "gotoMenu";
 		
 		private var aiPlaying : Boolean;
+		private var paused : Boolean = false;
 		private var gameRunning : Boolean = true;
 		private var shootBallTimer : Number;
 		private var timerCountDown : Timer = new Timer(1000,3);
@@ -116,6 +118,9 @@ package screens
 		
 		private function keyDown(e:KeyboardEvent):void 
 		{
+			if (e.keyCode == Keyboard.SPACE) {
+				pause();
+			}
 			if (gameRunning) {
 				if(!aiPlaying){
 					//playerTwo Movement
@@ -255,6 +260,37 @@ package screens
 				//player 1 scored
 				placeBall(1);
 				ui.addScore(1);
+			}
+		}
+		
+		private function pause() :void {
+			var l : int = numChildren;
+			var lc : int;
+			var child : Sprite;
+			var mov : MovieClip;
+			if (!paused) {
+				paused = true;
+				gameRunning = false;
+			}else {
+				paused = false;
+				gameRunning = true;
+			}
+			for (var i : int = 0; i < l; i++) {
+				if (getChildAt(i) is Sprite) {
+					child = getChildAt(i) as Sprite;
+					lc = child.numChildren;
+					for (var j : int = 0; j < lc; j++){
+						if(child.getChildAt(j) is MovieClip){
+							mov = child.getChildAt(j) as MovieClip;
+							if (paused) {
+								mov.stop();
+							}else {
+								mov.play();
+							}
+						}
+					}
+					
+				}
 			}
 		}
 		

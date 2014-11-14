@@ -38,6 +38,7 @@ package media
 		public static function loadSounds() : void {
 			
 			// music
+			/*
 			allUrls.push(new URLRequest("http://15826.hosts.ma-cloud.nl/Leerjaar2/Projecten/PongGame/sounds/Instrument.mp3")); // Menu Music
 			allUrls.push(new URLRequest("http://15826.hosts.ma-cloud.nl/Leerjaar2/Projecten/PongGame/sounds/Instrument2.mp3")); // Game Music
 			allUrls.push(new URLRequest("http://15826.hosts.ma-cloud.nl/Leerjaar2/Projecten/PongGame/sounds/crashInIce.mp3")); // Ice ball collision Sound
@@ -45,7 +46,7 @@ package media
 			allUrls.push(new URLRequest("http://15826.hosts.ma-cloud.nl/Leerjaar2/Projecten/PongGame/sounds/spelerGroter.mp3")); // grow Player Sound
 			allUrls.push(new URLRequest("http://15826.hosts.ma-cloud.nl/Leerjaar2/Projecten/PongGame/sounds/readyEnd.mp3")); // Ready (go) 3Sound
 			allUrls.push(new URLRequest("http://15826.hosts.ma-cloud.nl/Leerjaar2/Projecten/PongGame/sounds/readyBegin.mp3")); // Ready 1 and 2 (ready, set)Sound
-			
+			*/
 			//sounds/effects
 			for (var i : int = 0; i < allUrls.length; i++) {
 				
@@ -95,6 +96,25 @@ package media
 		{
 			soundChannel.removeEventListener(Event.COMPLETE, setConstNull);
 			constSound = null;
+		}
+		
+		public static function muteSound() :void {
+			if (soundTransform.volume == 0) {
+				soundTransform.volume = 0.7;
+			}else {
+				soundTransform.volume = 0;
+			}
+		}
+		public static function muteMusic() :void {
+			if (musicTransform.volume == 0) {
+				musicTransform.volume = 0.5;
+			}else {
+				musicTransform.volume = 0;
+			}
+		}
+		public static function stopSound() :void {
+			soundChannel.stop();
+			musicChannel.stop();
 		}
 	}
 
