@@ -3,9 +3,12 @@ package
 	import events.StartGameEvent;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import media.EffectsSoundButton;
+	import media.MusicSoundButton;
 	import screens.Game;
 	import screens.Menu;
 	import media.SoundManager;
+	import media.SoundButton;
 	
 	/**
 	 * ...
@@ -43,7 +46,23 @@ package
 			if (SoundManager.allSoundsLoaded) {
 				removeEventListener(Event.ENTER_FRAME, checkSoundLoaded);
 				switchScreen(MENU_SCREEN);
+				addSoundButtons();
 			}
+		}
+		
+		private function addSoundButtons():void 
+		{
+			var muteSoundButton : SoundButton = new EffectsSoundButton();
+			var muteMusicButton : SoundButton = new MusicSoundButton();
+			
+			muteMusicButton.x = stage.stageWidth - 53;
+			muteMusicButton.y = 25;
+			
+			muteSoundButton.x = muteMusicButton.x - 45;
+			muteSoundButton.y = muteMusicButton.y;
+			
+			stage.addChild(muteSoundButton);
+			stage.addChild(muteMusicButton);
 		}
 		
 		private function switchScreen(screen : String) :void {

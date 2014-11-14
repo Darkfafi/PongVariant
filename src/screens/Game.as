@@ -31,6 +31,9 @@ package screens
 		private var ui : UI;
 		private var ai : AI;
 		
+		private var pOneInstructions : InstructionsPOne = new InstructionsPOne();
+		private var pTwoInstructions : InstructionsPTwo = new InstructionsPTwo();
+		
 		//Players
 		private var playerOne : Player = new Player();
 		private var playerTwo : Player = new Player();
@@ -96,17 +99,30 @@ package screens
 			
 			switch(t.currentCount) {				
 				case 1:
-					trace("READY");
+					//trace("READY");
+					
+					pOneInstructions.x = 120;
+					pOneInstructions.y = stage.stageHeight / 3;
+					
+					pTwoInstructions.x = stage.stageWidth - 220;
+					pTwoInstructions.y = pOneInstructions.y;
+					
+					addChild(pOneInstructions);
+					addChild(pTwoInstructions);
+					
 					SoundManager.playSound(SoundManager.READY_BEGIN);
 				break;
 					
 				case 2:
-					trace("SET");
+					//trace("SET");
 					SoundManager.playSound(SoundManager.READY_BEGIN);
 				break;
 				case 3:
+					removeChild(pOneInstructions);
+					removeChild(pTwoInstructions);
+				
 					timerCountDown.removeEventListener(TimerEvent.TIMER, onTik);
-					trace("GO");
+					//trace("GO");
 					SoundManager.playSound(SoundManager.READY_END);
 					placeObjects();
 					addEventListener(Event.ENTER_FRAME, update);
@@ -119,7 +135,7 @@ package screens
 		private function keyDown(e:KeyboardEvent):void 
 		{
 			if (e.keyCode == Keyboard.SPACE) {
-				pause();
+				SoundManager.muteMusic();
 			}
 			if (gameRunning) {
 				if(!aiPlaying){
@@ -260,37 +276,6 @@ package screens
 				//player 1 scored
 				placeBall(1);
 				ui.addScore(1);
-			}
-		}
-		
-		private function pause() :void {
-			var l : int = numChildren;
-			var lc : int;
-			var child : Sprite;
-			var mov : MovieClip;
-			if (!paused) {
-				paused = true;
-				gameRunning = false;
-			}else {
-				paused = false;
-				gameRunning = true;
-			}
-			for (var i : int = 0; i < l; i++) {
-				if (getChildAt(i) is Sprite) {
-					child = getChildAt(i) as Sprite;
-					lc = child.numChildren;
-					for (var j : int = 0; j < lc; j++){
-						if(child.getChildAt(j) is MovieClip){
-							mov = child.getChildAt(j) as MovieClip;
-							if (paused) {
-								mov.stop();
-							}else {
-								mov.play();
-							}
-						}
-					}
-					
-				}
 			}
 		}
 		

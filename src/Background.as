@@ -19,7 +19,7 @@ package
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
-			var backGround : MovieClip = new GameBG();
+			var backGround : MovieClip = new GameBGAnim();
 			var fireWall : MovieClip = new FlameWall();
 			
 			var cool1 : MovieClip = new CoolPlaceArt();

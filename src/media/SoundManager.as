@@ -27,6 +27,9 @@ package media
 		private static var soundChannel : SoundChannel = new SoundChannel();
 		private static var musicChannel : SoundChannel = new SoundChannel();
 		
+		private static var musicPausePos : int;
+		private static var currentMusic : Sound;
+		
 		private static var constSound : Sound = null;
 		
 		private static var totalSoundsLoaded : int = 0;
@@ -38,7 +41,7 @@ package media
 		public static function loadSounds() : void {
 			
 			// music
-			/*
+			
 			allUrls.push(new URLRequest("http://15826.hosts.ma-cloud.nl/Leerjaar2/Projecten/PongGame/sounds/Instrument.mp3")); // Menu Music
 			allUrls.push(new URLRequest("http://15826.hosts.ma-cloud.nl/Leerjaar2/Projecten/PongGame/sounds/Instrument2.mp3")); // Game Music
 			allUrls.push(new URLRequest("http://15826.hosts.ma-cloud.nl/Leerjaar2/Projecten/PongGame/sounds/crashInIce.mp3")); // Ice ball collision Sound
@@ -46,7 +49,7 @@ package media
 			allUrls.push(new URLRequest("http://15826.hosts.ma-cloud.nl/Leerjaar2/Projecten/PongGame/sounds/spelerGroter.mp3")); // grow Player Sound
 			allUrls.push(new URLRequest("http://15826.hosts.ma-cloud.nl/Leerjaar2/Projecten/PongGame/sounds/readyEnd.mp3")); // Ready (go) 3Sound
 			allUrls.push(new URLRequest("http://15826.hosts.ma-cloud.nl/Leerjaar2/Projecten/PongGame/sounds/readyBegin.mp3")); // Ready 1 and 2 (ready, set)Sound
-			*/
+			
 			//sounds/effects
 			for (var i : int = 0; i < allUrls.length; i++) {
 				
@@ -77,7 +80,8 @@ package media
 			if(sound != null){
 				if (sound == allSounds[MENU_BG_MUSIC] || sound == allSounds[GAME_BG_MUSIC]) {
 					musicChannel.stop();
-					musicChannel = sound.play(0, 9999,musicTransform);	
+					currentMusic = sound;
+					musicChannel = currentMusic.play(0, 9999,musicTransform);	
 				}else if (sound == allSounds[GROW_PLAYER_SOUND]) {
 					
 					if (constSound == null) {
@@ -98,18 +102,25 @@ package media
 			constSound = null;
 		}
 		
-		public static function muteSound() :void {
+		public static function muteSound() :Boolean {
 			if (soundTransform.volume == 0) {
 				soundTransform.volume = 0.7;
+				return true;
 			}else {
 				soundTransform.volume = 0;
+				return false;
 			}
 		}
-		public static function muteMusic() :void {
+		public static function muteMusic() :Boolean {
 			if (musicTransform.volume == 0) {
 				musicTransform.volume = 0.5;
+				musicChannel = currentMusic.play(musicPausePos, 999, musicTransform);
+				return true;
 			}else {
+				musicPausePos = musicChannel.position;
+				musicChannel.stop();
 				musicTransform.volume = 0;
+				return false;
 			}
 		}
 		public static function stopSound() :void {

@@ -44,8 +44,7 @@ package screens
 			
 			arrowUp = new ArrowButton();
 			
-			arrowDown = new ArrowButton();
-			arrowDown.scaleY = -1;
+			arrowDown = new ArrowDown();
 			
 			onePButton = new OnePlayerButton();
 
@@ -55,7 +54,7 @@ package screens
 			showWinTimeSet.y = stage.stageHeight / 2;
 			
 			arrowDown.x = showWinTimeSet.x - 35;
-			arrowDown.y = showWinTimeSet.y + arrowDown.height;
+			arrowDown.y = showWinTimeSet.y;
 			
 			arrowUp.x = showWinTimeSet.x + showWinTimeSet.width + 65;
 			arrowUp.y = showWinTimeSet.y;
